@@ -4,11 +4,14 @@
 
 <br/>
 
+[![GitHub stars](https://img.shields.io/github/stars/Nagendhra-web/memory-bank?style=for-the-badge&labelColor=1a1a2e&color=7F77DD)](https://github.com/Nagendhra-web/memory-bank/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/Nagendhra-web/memory-bank?style=for-the-badge&labelColor=1a1a2e&color=378ADD)](https://github.com/Nagendhra-web/memory-bank/issues)
 ![version](https://img.shields.io/badge/version-2.0.0-7F77DD?style=for-the-badge&labelColor=1a1a2e)
 ![license](https://img.shields.io/badge/license-Apache_2.0-1D9E75?style=for-the-badge&labelColor=1a1a2e)
-![standard](https://img.shields.io/badge/agentskills.io-standard-378ADD?style=for-the-badge&labelColor=1a1a2e)
-![works with](https://img.shields.io/badge/Claude_Code-ready-D85A30?style=for-the-badge&labelColor=1a1a2e)
 ![token savings](https://img.shields.io/badge/token_savings-60--80%25-FFD700?style=for-the-badge&labelColor=1a1a2e)
+![works with](https://img.shields.io/badge/Claude_Code-ready-D85A30?style=for-the-badge&labelColor=1a1a2e)
+![standard](https://img.shields.io/badge/agentskills.io-standard-378ADD?style=for-the-badge&labelColor=1a1a2e)
+[![CI](https://img.shields.io/github/actions/workflow/status/Nagendhra-web/memory-bank/validate.yml?style=for-the-badge&labelColor=1a1a2e&label=CI)](https://github.com/Nagendhra-web/memory-bank/actions)
 ![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge&labelColor=1a1a2e)
 
 <br/>

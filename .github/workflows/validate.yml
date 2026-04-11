@@ -1,0 +1,91 @@
+name: Validate Skill
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check SKILL.md exists
+        run: |
+          if [ ! -f "skills/memory-bank/SKILL.md" ]; then
+            echo "ERROR: skills/memory-bank/SKILL.md not found"
+            exit 1
+          fi
+          echo "SKILL.md found"
+
+      - name: Validate YAML frontmatter
+        run: |
+          head -20 skills/memory-bank/SKILL.md | grep -q "^name:" || { echo "ERROR: missing name field"; exit 1; }
+          head -20 skills/memory-bank/SKILL.md | grep -q "^description:" || { echo "ERROR: missing description field"; exit 1; }
+          head -20 skills/memory-bank/SKILL.md | grep -q "^tags:" || { echo "ERROR: missing tags field"; exit 1; }
+          head -20 skills/memory-bank/SKILL.md | grep -q "^version:" || { echo "ERROR: missing version field"; exit 1; }
+          echo "All required frontmatter fields present"
+
+      - name: Check reference files exist
+        run: |
+          refs=(
+            "skills/memory-bank/references/memory-layers.md"
+            "skills/memory-bank/references/branch-aware-memory.md"
+            "skills/memory-bank/references/smart-compression.md"
+            "skills/memory-bank/references/session-diffing.md"
+            "skills/memory-bank/references/advanced-patterns.md"
+            "skills/memory-bank/references/context-efficiency.md"
+            "skills/memory-bank/references/claude-md-integration.md"
+          )
+          for ref in "${refs[@]}"; do
+            if [ ! -f "$ref" ]; then
+              echo "ERROR: Missing reference file: $ref"
+              exit 1
+            fi
+          done
+          echo "All 7 reference files present"
+
+      - name: Check example files exist
+        run: |
+          examples=(
+            "skills/memory-bank/examples/solo-fullstack.md"
+            "skills/memory-bank/examples/team-backend.md"
+            "skills/memory-bank/examples/monorepo.md"
+            "skills/memory-bank/examples/minimal.md"
+          )
+          for ex in "${examples[@]}"; do
+            if [ ! -f "$ex" ]; then
+              echo "ERROR: Missing example file: $ex"
+              exit 1
+            fi
+          done
+          echo "All 4 example files present"
+
+      - name: Validate marketplace.json
+        run: |
+          python3 -m json.tool .claude-plugin/marketplace.json > /dev/null
+          echo "marketplace.json is valid JSON"
+
+      - name: Check for secrets
+        run: |
+          if grep -rn "sk-[a-zA-Z0-9]\{20,\}" skills/ ; then
+            echo "ERROR: Possible API key detected"
+            exit 1
+          fi
+          if grep -rn "password\s*=\s*['\"]" skills/ ; then
+            echo "ERROR: Possible password detected"
+            exit 1
+          fi
+          echo "No secrets detected"
+
+      - name: Report
+        run: |
+          echo ""
+          echo "=== Validation Complete ==="
+          files=$(find skills/ -name "*.md" | wc -l)
+          lines=$(find skills/ -name "*.md" -exec cat {} + | wc -l)
+          echo "Skill files: $files"
+          echo "Total lines: $lines"
+          echo "All checks passed"
